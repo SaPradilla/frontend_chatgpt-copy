@@ -9,7 +9,7 @@
 <style scoped>
 svg{
   margin: 0 auto;
-  height:1em;
-  width:4em;
+  height:3em;
+  width:5em;
 }
 </style>

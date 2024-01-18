@@ -1,207 +1,108 @@
 <script setup>
-  import {ref,onMounted,watch} from 'vue'
-  // import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';`
-  import Loader from '../components/UI/Loader.vue' 
-  import { io } from 'socket.io-client';
-  
-  const msg = ref({
-    role:'',
-    content:''
-  })
-  
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
-  const loading = ref(false)
-  const messages = ref([])
-  const chatContainer = ref(null);
+const redirectLogin = ()=>{
+    router.push({name:'login'})
+}
 
- 
-  watch(messages, () => {
-    scrollChatToBottom();
-  });
-
-  const socket = io('http://localhost:3200');
-  
-  socket.on('recovery message', (mgs)=>{
-    mgs.forEach(msg => {
-
-      messages.value.push({
-        role:'user',
-        content:msg.content
-      });
-
-      messages.value.push({
-        role:'assistant',
-        content:msg.response
-      });
-      
-    });
-    scrollChatToBottom();
-
-  })
-  socket.on('chat message', (msg)=> {    
-
-    console.log('se ejecuto')
-    messages.value.push(msg);
-    loading.value=false
-    scrollChatToBottom();
-  
-  })
-
-  const sendMessage = async()=>{
-    loading.value = true
-    if (msg.value.content.trim() !== '') {
-      
-      
-      msg.value.role = 'user'
-      // Enviar mensaje al servidor
-      messages.value.push({
-        role:msg.value.role,
-        content:msg.value.content
-      });
-      socket.emit('chat message', msg.value.content);
-      
-      // Limpiar el campo de entrada
-      Object.assign(msg.value, {
-        role: '',
-        content: '',
-      });
-      scrollChatToBottom();
-    }
-  }
-  // Función para desplazar el contenedor de chat hacia abajo
-  const scrollChatToBottom = () => {
-    chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
-    console.log('se esta ejutando')
-  };
-
-  onMounted(()=>{
-    scrollChatToBottom();
-  })
+const redirectSingUp = ()=>{
+    router.push({name:'register'})
+}
 </script>
 
 <template>
-  <div class="contenedor-chat">
-    <h1>Chat GayPT</h1>
-    <div class="chat">
-
-      <div class="contenido-chat"  ref="chatContainer">
-        <div v-for="message in messages" class="mensajes" >
-          <p> <span>{{ message.role === 'user'  ? 'Tu:' : 'GayGpt:' }}</span>  {{  message.content  }} </p>
+    <div class="container-home">
+        <div class="presentation">
+            <div class="tag">
+                <p>ChatGayPT</p>
+                <div></div>
+            </div>
+            <div class="description">
+                <h2>Write a text</h2>
+                <p>Able to process and generate natural language text to perform tasks such as answering questions, maintaining conversations and generating coherent textual content.</p>
+            </div>
         </div>
-      </div>
-
-      <div class="input">
-        <form @submit.prevent="sendMessage">
-          <input type="text" placeholder="Type prompt" v-model="msg.content">
-          <button :disabled="loading" type="submit">
-          <div  class="loading" v-if="loading">
-            <Loader/>
-          </div>
-          <p id="send" v-else>Enviar</p>
-          </button>
-        </form>
-      </div>
+        <div class="home">
+            <div class="container">
+                <h1>Get started</h1>
+                <div class="actions">
+                    <button @click="redirectLogin">Log in</button>
+                    <button @click="redirectSingUp">Sing up</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-.contenido-chat{
-  overflow-y: auto;
-  height: 100%;
-  width: 100%;
-  scroll-behavior: smooth;
-  padding: 10px;
+h1{
+    color: white;
+    text-align: center;
 }
-.contenido-chat::-webkit-scrollbar{
-  width: 7px;
+h2{
+    color: #D292FF;
+    font-size: 3em;
 }
-.contenido-chat::-webkit-scrollbar-thumb{
-  background-color: #474747;
-  border-radius: 10px;
+p{
+    color: #D292FF;
 }
-.contenido-chat::-webkit-scrollbar-thumb:hover{
-  background-color: #7c7c7c;
+.tag {
+    top: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+.tag div{
+    background-color: #D292FF;
+    border-radius: 100%;
+    width: 15px;
+    height: 15px;
+}
+.container-home{
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+.presentation{
+    background-color: #00002E;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+.description p{
+    font-size: 2em;
+}
+.home{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
-#send{
-  font-size: 1em;
+.actions{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
 }
-.loading{
-  display: flex;
-  align-content: center;
-  justify-content: center;
+.actions button{
+    cursor: pointer;
+    border: none;
+    background-color: #3C46FF;
+    width: 12em;
+    height: 2.5em;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    transition: all 0.2s ease;
 }
-span{
-  font-weight: 600;
-}
-h1 {
-  text-align: center;
-  color: white;
-}
-
-.contenedor-chat {
-  display: grid;
-  place-content: center;
-}
-
-.chat {
-  background-color: rgba(255, 255, 255, 0.75);
-  border-radius: 10px;
-  height: 80vh;
-  width: 80vw;
-  display: flex;
-  flex-direction: column; 
-  justify-content: flex-end; 
-  /* padding: 0px 0px 20px 20px ;  */
-
-}
-
-.input {
-  padding: 20px;
-
-  width: 100%; 
-}
-
-form {
-  display: flex;
-  width: 100%;
-  height: max-content;
-}
-
-input {
-  border-radius: 20px 0 0 20px;
-  border: 1px solid #eee;
-  flex: 1;
-  padding: 15px;
-  height:  max-content;
-}
-
-input:focus {
-  outline: none;
-}
-
-button {
-  border: none;
-  background: rgb(66, 140, 238);
-  border-radius: 0 20px 20px 0;
-  width: 80px;
-  color: white;
-  transition: all 0.2s ease-in;
-  cursor: pointer;
-  font-weight: 500;
-
-}
-
-button:hover {
-  background: rgb(91, 152, 233);
-}
-
-button:active {
-  background: rgb(106, 151, 210);
-}
-button:disabled{
-  background: rgb(107, 108, 109);
-
+.actions button:hover{
+    background-color: #0000FF;
+    
 }
 </style>
