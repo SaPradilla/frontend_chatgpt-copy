@@ -31,7 +31,7 @@ const redirectRegisterPwd = ()=>{
               <ButtonForm>Continue</ButtonForm>
              
             </form>
-            <p>Already have an account? <span id="singin">Sign in</span></p>
+            <p>Already have an account? <span id="singin" @click="router.push({name:'login'})">Sign in</span></p>
           </div>
         </div>
         <div class="others">

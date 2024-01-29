@@ -32,7 +32,7 @@ const redirectRegisterPwd = ()=>{
               <ButtonForm>Continue</ButtonForm>
              
             </form>
-            <p>Don't have an account? <span id="singin"> Register</span></p>
+            <p>Don't have an account? <span id="singin" @click="router.push({name:'register'})"> Register</span></p>
           </div>
         </div>
         <div class="others">

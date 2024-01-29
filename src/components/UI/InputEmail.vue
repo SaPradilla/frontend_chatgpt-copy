@@ -10,7 +10,7 @@ const Auth = useAuth()
 
         <div class="entryarea">
             <input type="email" v-model="Auth.user.email" required>
-            <div class="labelline">Email</div>
+            <div class="labelline" :class="Auth.user.email === '' ? '' : 'up' ">Email</div>
         </div>
     </div>
 </template>
@@ -60,7 +60,10 @@ input:valid{
     border: 1px solid #10a37f ;
 }
 input:focus + .labelline,
-input:valid + .labelline{
+input:valid + .labelline,
+.labelline.up
+
+{
     color: #10a37f;
     height: 30px;
     line-height: 30px;
@@ -68,8 +71,5 @@ input:valid + .labelline{
     transform: translate(-15px,-16px) scale(0.88);
     z-index: 1111;
 }
-.labelline.up{
-    transform: translate(-15px,-16px) scale(0.88);
 
-}
 </style>

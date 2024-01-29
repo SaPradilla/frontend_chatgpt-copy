@@ -32,6 +32,16 @@ const router = createRouter({
       path:'/',
       name:'home',
       component: () => import('../views/HomeView.vue'), 
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem('token')) {
+          // Si el usuario está autenticado, redirige a la página de inicio
+          next('/chat');
+        } else {
+          // Si el usuario no está autenticado, permite el acceso a la página de inicio de sesión
+          next();
+        }
+      }
+
     }
   ]
 })
@@ -45,7 +55,7 @@ router.beforeEach((to,from,next)=>{
     if(localStorage.getItem('token')){
       next()
     }else{
-      next('/login')
+      next('/login/identifier')
     }
   }else{
     next()

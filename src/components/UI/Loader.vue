@@ -3,13 +3,28 @@
 </script>
 
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+
+    <circle fill='#FFFFFF' stroke='#FFFFFF' stroke-width='4' r='20' cx='40' cy='65'>
+      <animate attributeName='cy' calcMode='spline' dur='2' values='65;135;65;' keySplines='.5 0 .5 1;.5 0 .5 1'
+        repeatCount='indefinite' begin='-.4'></animate>
+    </circle>
+    <circle fill='#FFFFFF' stroke='#FFFFFF' stroke-width='4' r='20' cx='100' cy='65'>
+      <animate attributeName='cy' calcMode='spline' dur='2' values='65;135;65;' keySplines='.5 0 .5 1;.5 0 .5 1'
+        repeatCount='indefinite' begin='-.2'></animate>
+    </circle>
+    <circle fill='#FFFFFF' stroke='#FFFFFF' stroke-width='4' r='20' cx='160' cy='65'>
+      <animate attributeName='cy' calcMode='spline' dur='2' values='65;135;65;' keySplines='.5 0 .5 1;.5 0 .5 1'
+        repeatCount='indefinite' begin='0'></animate>
+    </circle>
+
+</svg>
+
 </template>
 
-<style scoped>
-svg{
+<style scoped>svg {
   margin: 0 auto;
-  height:3em;
-  width:5em;
-}
-</style>
+  height: 3em;
+  width: 4em;
+
+}</style>
